@@ -1,20 +1,22 @@
 package com.izavasconcelos.desafio.analytics.app;
 
-import com.izavasconcelos.desafio.analytics.controller.AnalyticsController;
-import com.izavasconcelos.desafio.analytics.dao.DataAnalysis;
-import com.izavasconcelos.desafio.analytics.model.Salesman;
+import com.izavasconcelos.desafio.analytics.annotation.AppConfig;
+import com.izavasconcelos.desafio.analytics.service.AnalyticsService;
+import com.izavasconcelos.desafio.analytics.dao.SalesDAO;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
-        DataAnalysis dataAnalysis = new DataAnalysis();
-        boolean bool = dataAnalysis.read();
+        ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        AnalyticsService analyticsService = (AnalyticsService) appContext.getBean("analyticsController");
+        SalesDAO salesDAO = new SalesDAO();
+        boolean bool = salesDAO.read();
         if(bool) {
             System.out.println("criou!");
         } else
             System.out.println("nao");
 
-        AnalyticsController list = new AnalyticsController();
-        System.out.println(dataAnalysis.totalCustomers());
-        dataAnalysis.write();
+        salesDAO.write();
     }
 }

@@ -1,6 +1,6 @@
 package com.izavasconcelos.desafio.analytics.dao;
 
-import com.izavasconcelos.desafio.analytics.controller.AnalyticsController;
+import com.izavasconcelos.desafio.analytics.service.AnalyticsService;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -13,18 +13,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
-public class DataAnalysis {
+public class SalesDAO {
     private final static String FILE_OUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/out/";
     private final static String FILE_OUT_NAME = "analysis.done.dat";
     private final static String FILE_IN_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
     private final static String FILE_IN_NAME = "analysis.done.dat";
 
 
-    private AnalyticsController analyticsController;
+    private AnalyticsService analyticsService;
 
-    public DataAnalysis() {
-        this.analyticsController = new AnalyticsController();
+    public SalesDAO() {
+        this.analyticsService = new AnalyticsService();
     }
 
     public boolean write() {
@@ -51,7 +52,7 @@ public class DataAnalysis {
                     String strLine;
 
                     while((strLine = bufferedReader.readLine()) != null) {
-                        analyticsController.getLayout(strLine);
+                        analyticsService.getLayout(strLine);
                     }
                     dataInputStream.close();
                 }
@@ -65,14 +66,14 @@ public class DataAnalysis {
     }
 
     public int totalCustomers() {
-        return analyticsController.getCountCustomers();
+        return analyticsService.getCountCustomers();
     }
 
     public int totalSalesman() {
-        return analyticsController.getCountSalesman();
+        return analyticsService.getCountSalesman();
     }
 
-    public String expensiveSale() {
-        return analyticsController.getExpensiveSaleId();
+    public Map<String, Double> expensiveSale() {
+        return analyticsService.getExpensiveSaleId();
     }
 }
