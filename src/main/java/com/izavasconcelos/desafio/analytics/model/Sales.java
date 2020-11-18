@@ -13,8 +13,12 @@ public class Sales {
         this.name = name;
     }
 
+    public String getSaleId() {
+        return saleId;
+    }
+
     @Override
     public String toString() {
-        return "\nSales ID: " + saleId + "  |  Items: " + salesList + "  | Salesman: " + name;
+        return "\n\n\nSales ID: " + saleId + "  |  Items: " + salesList + "  | Salesman: " + name;
     }
 }

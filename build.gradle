@@ -8,7 +8,14 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-
+ext {
+    springVersion = "5.2.9.RELEASE"
+}
 dependencies {
+    implementation ([
+            'org.springframework:spring-core:'+springVersion,
+            'org.springframework:spring-context:'+springVersion,
+            'org.springframework:spring-beans:'+springVersion,
+    ])
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

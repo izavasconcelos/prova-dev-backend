@@ -14,6 +14,7 @@ public class Main {
             System.out.println("nao");
 
         AnalyticsController list = new AnalyticsController();
-        System.out.println(list.getSalesmanList());
+        System.out.println(dataAnalysis.totalCustomers());
+        dataAnalysis.write();
     }
 }

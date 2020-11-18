@@ -31,7 +31,7 @@ public class DataAnalysis {
         try {
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(FILE_OUT_PATH + FILE_OUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-            outputStreamWriter.write("003");
+            outputStreamWriter.write(""+totalCustomers()+","+totalSalesman()+","+expensiveSale());
             outputStreamWriter.close();
             return true;
         } catch (IOException e) {
@@ -43,7 +43,6 @@ public class DataAnalysis {
         try {
             File dir = new File(FILE_IN_PATH);
             if(dir.isDirectory()){
-                System.out.println("sou um dir");
                 for(File file : dir.listFiles()){
                     FileInputStream fileInputStream = new FileInputStream(file);
                     DataInputStream dataInputStream = new DataInputStream(fileInputStream);
@@ -65,7 +64,15 @@ public class DataAnalysis {
         }
     }
 
-    public void create() {
+    public int totalCustomers() {
+        return analyticsController.getCountCustomers();
+    }
 
+    public int totalSalesman() {
+        return analyticsController.getCountSalesman();
+    }
+
+    public String expensiveSale() {
+        return analyticsController.getExpensiveSaleId();
     }
 }
