@@ -1,6 +1,8 @@
 package com.izavasconcelos.desafio.analytics.app;
 
+import com.izavasconcelos.desafio.analytics.controller.AnalyticsController;
 import com.izavasconcelos.desafio.analytics.dao.DataAnalysis;
+import com.izavasconcelos.desafio.analytics.model.Salesman;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,5 +12,8 @@ public class Main {
             System.out.println("criou!");
         } else
             System.out.println("nao");
+
+        AnalyticsController list = new AnalyticsController();
+        System.out.println(list.getSalesmanList());
     }
 }
