@@ -1,15 +1,19 @@
-package com.izavasconcelos.desafio.analytics.service;
+package com.izavasconcelos.desafio.analytics.controller;
 
+import com.izavasconcelos.desafio.analytics.dao.SalesDAO;
 import com.izavasconcelos.desafio.analytics.model.Customer;
 import com.izavasconcelos.desafio.analytics.model.Items;
 import com.izavasconcelos.desafio.analytics.model.Sales;
 import com.izavasconcelos.desafio.analytics.model.Salesman;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-@Service
-public class AnalyticsService {
+@Controller
+public class DataController {
 
     public final static String ID_SALESMAN = "001";
     public final static String ID_CUSTOMER = "002";
@@ -18,37 +22,45 @@ public class AnalyticsService {
     private List<Salesman> salesmanList = new ArrayList<>();
     private List<Customer> customerList = new ArrayList<>();
     private List<Sales> salesList;
-    private List<Items> itemsList;
-    private Map<String, Double> expensive = new HashMap<>();
-    private int countCustomers = 0;
-    private int countSalesman = 0;
-    private double expensiveSale = 0;
+    private final List<Items> itemsList;
+    private final Map<String, Double> totalSales = new HashMap<>();
     private double total = 0;
 
-    public AnalyticsService() {
+    private SalesDAO salesDAO;
+
+
+    public DataController() {
         salesList = new ArrayList<>();
         itemsList = new ArrayList<>();
+        salesDAO = new SalesDAO();
+    }
+
+    public void extractInfoDataFile() {
+        List<String> dataList = salesDAO.getDataList();
+
+        for (String list: dataList) {
+            getLayout(list);
+        }
+        System.out.println(dataList.get(0));
     }
 
     public void getLayout(String data) {
+
         String [] dataSplit = data.split("ç");
 
         switch (dataSplit[0]) {
             case ID_SALESMAN:
-                countSalesman++;
                 Salesman salesman = new Salesman(dataSplit[1], dataSplit[2], Double.parseDouble(dataSplit[3]));
                 salesmanList.add(salesman);
                 break;
             case ID_CUSTOMER: {
-                countCustomers++;
+                Customer customer = new Customer(dataSplit[1], dataSplit[2], dataSplit[3]);
+                customerList.add(customer);
                 break;
             }
             case ID_SALES_DATA: {
-                salesItemsSeparated(dataSplit[2]);
-                if(total > expensiveSale) {
-                    expensive.put(dataSplit[1],total);
-                    expensiveSale = total;
-                }
+                salesItemsSeparated(dataSplit[1], dataSplit[2]);
+
                 Sales sales = new Sales(dataSplit[1], itemsList, dataSplit[3]);
                 salesList.add(sales);
                 break;
@@ -56,7 +68,7 @@ public class AnalyticsService {
         }
     }
 
-    public List<Items> salesItemsSeparated(String allItems) {
+    public List<Items> salesItemsSeparated(String saleId, String allItems) {
         String [] items = allItems.split(",|\\s|]"); //\\s|]|,\\s|\\[");
         items[0]= items[0].substring(1);
         total = 0;
@@ -64,11 +76,11 @@ public class AnalyticsService {
             String [] item = items[i].split("-");
             double quantity = Double.parseDouble(item[1]);
             double price = Double.parseDouble(item[2]);
-
             total = total + (quantity * price);
             Items listItems = new Items(item[0], item[1], item[2]);
             itemsList.add(listItems);
         }
+        totalSales.put(saleId,total);
         return itemsList;
     }
 
@@ -76,15 +88,15 @@ public class AnalyticsService {
         return salesmanList;
     }
 
-    public int getCountCustomers() {
-        return countCustomers;
+    public List<Customer> getCustomerList() {
+        return customerList;
     }
 
-    public int getCountSalesman() {
-        return countSalesman;
+    public List<Sales> getSalesList() {
+        return salesList;
     }
 
-    public Map<String, Double> getExpensiveSaleId() {
-        return expensive;
+    public Map<String, Double> getTotalSales() {
+        return totalSales;
     }
 }

@@ -1,6 +1,8 @@
 package com.izavasconcelos.desafio.analytics.dao;
 
-import com.izavasconcelos.desafio.analytics.service.AnalyticsService;
+import com.izavasconcelos.desafio.analytics.controller.DataController;
+import com.izavasconcelos.desafio.analytics.service.ReportService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -13,7 +15,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 public class SalesDAO {
     private final static String FILE_OUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/out/";
@@ -21,18 +26,22 @@ public class SalesDAO {
     private final static String FILE_IN_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
     private final static String FILE_IN_NAME = "analysis.done.dat";
 
+    private List<String> dataList;
 
-    private AnalyticsService analyticsService;
+    @Autowired
+    private DataController dataController;
+    @Autowired
+    private ReportService reportService;
 
     public SalesDAO() {
-        this.analyticsService = new AnalyticsService();
+        this.dataList = new ArrayList<>();
     }
 
     public boolean write() {
         try {
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(FILE_OUT_PATH + FILE_OUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-            outputStreamWriter.write(""+totalCustomers()+","+totalSalesman()+","+expensiveSale());
+            outputStreamWriter.write(""+1+","+2+",");
             outputStreamWriter.close();
             return true;
         } catch (IOException e) {
@@ -40,7 +49,8 @@ public class SalesDAO {
         }
     }
 
-    public boolean read() {
+    public List<String> getDataList() {
+
         try {
             File dir = new File(FILE_IN_PATH);
             if(dir.isDirectory()){
@@ -52,28 +62,17 @@ public class SalesDAO {
                     String strLine;
 
                     while((strLine = bufferedReader.readLine()) != null) {
-                        analyticsService.getLayout(strLine);
+                        dataList.add(strLine);
                     }
                     dataInputStream.close();
                 }
             }
-            return true;
+            return dataList;
 
         } catch (IOException e) {
             System.out.println("exception");
-            return false;
+            return Collections.emptyList();
         }
     }
 
-    public int totalCustomers() {
-        return analyticsService.getCountCustomers();
-    }
-
-    public int totalSalesman() {
-        return analyticsService.getCountSalesman();
-    }
-
-    public Map<String, Double> expensiveSale() {
-        return analyticsService.getExpensiveSaleId();
-    }
 }
