@@ -20,5 +20,6 @@ public class Main {
         String i = service.expensiveSaleId();
         System.out.println(service.amountOfCustomers());
         System.out.println(service.amountOfSalesman());
+        service.getSalesList();
     }
 }

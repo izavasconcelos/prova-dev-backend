@@ -2,13 +2,11 @@ package com.izavasconcelos.desafio.analytics.service;
 
 
 import com.izavasconcelos.desafio.analytics.controller.DataController;
+import com.izavasconcelos.desafio.analytics.model.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,5 +37,9 @@ public class ReportService {
 
     public int amountOfSalesman() {
         return dataController.getSalesmanList().size();
+    }
+
+    public List<Sales> getSalesList() {
+        return dataController.getSalesList();
     }
 }

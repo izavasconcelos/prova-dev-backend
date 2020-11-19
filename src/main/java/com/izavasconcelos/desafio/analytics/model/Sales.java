@@ -17,6 +17,10 @@ public class Sales {
         return saleId;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "\n\n\nSales ID: " + saleId + "  |  Items: " + salesList + "  | Salesman: " + name;
