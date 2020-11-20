@@ -41,7 +41,7 @@ public class SalesDAO {
         try {
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(FILE_OUT_PATH + FILE_OUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-            outputStreamWriter.write(""+1+","+2+",");
+            outputStreamWriter.write(reportService.reportDataAnalysis());
             outputStreamWriter.close();
             return true;
         } catch (IOException e) {

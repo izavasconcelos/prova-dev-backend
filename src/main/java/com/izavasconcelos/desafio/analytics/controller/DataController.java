@@ -42,9 +42,14 @@ public class DataController {
 
     public void extractInfoDataFile() {
         List<String> dataList = salesDAO.getDataList();
-        for (String list: dataList) {
-            getLayout(list);
-        }
+        dataList.forEach(this::getLayout);
+        dataList.clear();
+    }
+
+    public void writeDataFile() {
+        salesDAO.write();
+        customerList.clear();
+        salesmanList.clear();
     }
 
     public void getLayout(String data) {
@@ -58,7 +63,9 @@ public class DataController {
                 break;
             case ID_CUSTOMER: {
                 Customer customer = new Customer(dataSplit[1], dataSplit[2], dataSplit[3]);
+                System.out.println("--entrei");
                 customerList.add(customer);
+                System.out.println(customerList);
                 break;
             }
             case ID_SALES_DATA: {

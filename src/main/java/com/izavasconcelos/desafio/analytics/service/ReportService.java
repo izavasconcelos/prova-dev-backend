@@ -2,6 +2,7 @@ package com.izavasconcelos.desafio.analytics.service;
 
 
 import com.izavasconcelos.desafio.analytics.controller.DataController;
+import com.izavasconcelos.desafio.analytics.model.Report;
 import com.izavasconcelos.desafio.analytics.model.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,17 @@ public class ReportService {
     @Autowired
     private DataController dataController;
 
-    public ReportService() {}
+    public ReportService() {
+    }
+
+    public String reportDataAnalysis() {
+        List<Report> report= new ArrayList<>();
+        report.add(new Report(String.valueOf(amountOfCustomers()),
+                String.valueOf(amountOfSalesman()),
+                expensiveSaleId(),
+                getWorstSalesman()));
+        return report.toString();
+    }
 
     public String expensiveSaleId() {
         Map<String, Double> totalSales = dataController.getTotalSales();
@@ -26,8 +37,7 @@ public class ReportService {
                         Map.Entry::getValue,
                         (x,y)-> {throw new AssertionError();}, LinkedHashMap::new));
 
-        String expensive = totalSales.keySet().stream().findFirst().get();
-        return expensive;
+        return totalSales.keySet().stream().findFirst().get();
     }
 
     public int amountOfCustomers() {
@@ -52,9 +62,6 @@ public class ReportService {
                         Map.Entry::getValue,
                         (x,y)-> {throw new AssertionError();}, LinkedHashMap::new
                 ));
-        String salesmanName = salesmanTotalSales.keySet().stream().findFirst().get();
-        System.out.println(salesmanName);
-
-        return "";
+        return salesmanTotalSales.keySet().stream().findFirst().get();
     }
 }
