@@ -17,9 +17,7 @@ public class Main {
         } else
             System.out.println("nao");
         dataController.extractInfoDataFile();
-        String i = service.expensiveSaleId();
-        System.out.println(service.amountOfCustomers());
-        System.out.println(service.amountOfSalesman());
-        service.getSalesList();
+
+        service.getWorstSalesman();
     }
 }

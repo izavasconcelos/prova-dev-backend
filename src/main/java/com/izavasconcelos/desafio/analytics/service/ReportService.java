@@ -18,16 +18,15 @@ public class ReportService {
     public ReportService() {}
 
     public String expensiveSaleId() {
-        Map<String, Double> salesList = dataController.getTotalSales();
-        salesList = salesList.entrySet().stream()
+        Map<String, Double> totalSales = dataController.getTotalSales();
+        totalSales = totalSales.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
                         (x,y)-> {throw new AssertionError();}, LinkedHashMap::new));
 
-        String expensive = salesList.keySet().stream().findFirst().get();
-        System.out.println(expensive);
+        String expensive = totalSales.keySet().stream().findFirst().get();
         return expensive;
     }
 
@@ -41,5 +40,21 @@ public class ReportService {
 
     public List<Sales> getSalesList() {
         return dataController.getSalesList();
+    }
+
+    public String getWorstSalesman() {
+        Map<String, Double> salesmanTotalSales = dataController.getTotalSalesman();
+
+        salesmanTotalSales = salesmanTotalSales.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.naturalOrder()))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (x,y)-> {throw new AssertionError();}, LinkedHashMap::new
+                ));
+        String salesmanName = salesmanTotalSales.keySet().stream().findFirst().get();
+        System.out.println(salesmanName);
+
+        return "";
     }
 }

@@ -25,6 +25,7 @@ public class DataController {
     private List<Sales> salesList;
     private List<Items> itemsList;
     private Map<String, Double> totalSales;
+    private Map<String, Double> totalSalesman;
 
 
     @Autowired
@@ -36,6 +37,7 @@ public class DataController {
         salesList = new ArrayList<>();
         itemsList = new ArrayList<>();
         totalSales = new HashMap<>();
+        totalSalesman = new HashMap<>();
     }
 
     public void extractInfoDataFile() {
@@ -60,7 +62,7 @@ public class DataController {
                 break;
             }
             case ID_SALES_DATA: {
-                itemsList = salesItemsSeparated(dataSplit[1], dataSplit[2]);
+                itemsList = salesItemsSeparated(dataSplit[1], dataSplit[2], dataSplit[3]);
                 Sales sales = new Sales(dataSplit[1], itemsList, dataSplit[3]);
                 salesList.add(sales);
                 break;
@@ -68,7 +70,7 @@ public class DataController {
         }
     }
 
-    public List<Items> salesItemsSeparated(String saleId, String listAllItems) {
+    public List<Items> salesItemsSeparated(String saleId, String listAllItems, String name) {
         String [] items = listAllItems.split(",|\\s|]");
         List<Items> list = new ArrayList<>();
         double total = 0;
@@ -83,6 +85,10 @@ public class DataController {
             list.add(listItems);
         }
         totalSales.put(saleId,total);
+        if(totalSalesman.containsKey(name)){
+            total += totalSalesman.get(name);
+        }
+        totalSalesman.put(name, total);
         return list;
     }
 
@@ -100,5 +106,9 @@ public class DataController {
 
     public Map<String, Double> getTotalSales() {
         return totalSales;
+    }
+
+    public Map<String, Double> getTotalSalesman() {
+        return totalSalesman;
     }
 }
