@@ -2,6 +2,8 @@ package com.izavasconcelos.desafio.analytics.app;
 
 import com.izavasconcelos.desafio.analytics.annotation.AppConfig;
 import com.izavasconcelos.desafio.analytics.controller.DataController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -14,39 +16,34 @@ public class Main {
     private static final String LOCAL_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
 
     public static void main(String[] args) throws IOException {
-        execute();
+        watcherFileSystems();
     }
 
-    public static void execute() throws IOException {
-
+    public static void watcherFileSystems() throws IOException {
         ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
         DataController dataController = (DataController) appContext.getBean("dataController");
-
-        Path pastaOrigem = Files.createDirectories(Paths.get(LOCAL_PATH));
+        Logger logger = LoggerFactory.getLogger(Main.class);
 
         WatchService watcher = FileSystems.getDefault().newWatchService();
 
-        pastaOrigem.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+        Path localPath = Files.createDirectories(Paths.get(LOCAL_PATH));
+        localPath.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
         dataController.executeDataAnalysis();
 
         while (true) {
             WatchKey wk;
             try {
-                System.out.printf("Aguardando arquivos em %s", pastaOrigem);
                 wk = watcher.take();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
             for (WatchEvent<?> event : wk.pollEvents()) {
-
                 if (event.kind() == OVERFLOW) continue;
-
-                //pega nome do arquivo criado
                 WatchEvent<Path> ev = (WatchEvent<Path>) event;
-                Path nomeArquivo = ev.context();
-                Path arquivoOrigem = pastaOrigem.resolve(nomeArquivo);
-                System.out.printf("Arquivo criado: %s\n", arquivoOrigem);
+                Path file = ev.context();
+                Path localFile = localPath.resolve(file);
+                logger.info("File create, modify or delete: " + localFile);
 
                 dataController.executeDataAnalysis();
             }

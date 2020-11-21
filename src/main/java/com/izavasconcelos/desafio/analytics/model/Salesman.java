@@ -11,6 +11,9 @@ public class Salesman {
         this.salary = salary;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
 
     @Override
     public String toString() {

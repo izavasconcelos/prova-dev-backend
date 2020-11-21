@@ -12,6 +12,10 @@ public class Customer {
         this.businessArea = businessArea;
     }
 
+    public String getCnpj() {
+        return cnpj;
+    }
+
     @Override
     public String toString() {
         return "\nCNPJ: " + cnpj + "  |  Name: " + name + "  | Business Area: " + businessArea;
