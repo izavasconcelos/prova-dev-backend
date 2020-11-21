@@ -2,8 +2,6 @@ package com.izavasconcelos.desafio.analytics.controller;
 
 import com.izavasconcelos.desafio.analytics.dao.SalesDAO;
 import com.izavasconcelos.desafio.analytics.model.Customer;
-import com.izavasconcelos.desafio.analytics.model.Items;
-import com.izavasconcelos.desafio.analytics.model.Sales;
 import com.izavasconcelos.desafio.analytics.model.Salesman;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +20,8 @@ public class DataController {
 
     private List<Salesman> salesmanList;
     private List<Customer> customerList;
-    private List<Sales> salesList;
-    private List<Items> itemsList;
-    private Map<String, Double> totalSales;
-    private Map<String, Double> totalSalesman;
+    private Map<String, Double> totalSalesById;
+    private Map<String, Double> totalSalesBySalesman;
 
 
     @Autowired
@@ -34,22 +30,20 @@ public class DataController {
     public DataController() {
         salesmanList = new ArrayList<>();
         customerList = new ArrayList<>();
-        salesList = new ArrayList<>();
-        itemsList = new ArrayList<>();
-        totalSales = new HashMap<>();
-        totalSalesman = new HashMap<>();
+        totalSalesById = new HashMap<>();
+        totalSalesBySalesman = new HashMap<>();
     }
 
-    public void extractInfoDataFile() {
+    public void executeDataAnalysis() {
         List<String> dataList = salesDAO.getDataList();
         dataList.forEach(this::getLayout);
         dataList.clear();
-    }
 
-    public void writeDataFile() {
-        salesDAO.write();
+        salesDAO.writeDataAnalysisOutputFile();
         customerList.clear();
         salesmanList.clear();
+        totalSalesById.clear();
+        totalSalesBySalesman.clear();
     }
 
     public void getLayout(String data) {
@@ -63,40 +57,34 @@ public class DataController {
                 break;
             case ID_CUSTOMER: {
                 Customer customer = new Customer(dataSplit[1], dataSplit[2], dataSplit[3]);
-                System.out.println("--entrei");
                 customerList.add(customer);
                 System.out.println(customerList);
                 break;
             }
             case ID_SALES_DATA: {
-                itemsList = salesItemsSeparated(dataSplit[1], dataSplit[2], dataSplit[3]);
-                Sales sales = new Sales(dataSplit[1], itemsList, dataSplit[3]);
-                salesList.add(sales);
+                salesItemsSeparated(dataSplit[1], dataSplit[2], dataSplit[3]);
                 break;
             }
         }
     }
 
-    public List<Items> salesItemsSeparated(String saleId, String listAllItems, String name) {
+    public void salesItemsSeparated(String saleId, String listAllItems, String name) {
         String [] items = listAllItems.split(",|\\s|]");
-        List<Items> list = new ArrayList<>();
-        double total = 0;
         items[0]= items[0].substring(1);
 
+        double total = 0;
         for (String s : items) {
             String[] item = s.split("-");
             double quantity = Double.parseDouble(item[1]);
             double price = Double.parseDouble(item[2]);
             total = total + (quantity * price);
-            Items listItems = new Items(item[0], item[1], item[2]);
-            list.add(listItems);
         }
-        totalSales.put(saleId,total);
-        if(totalSalesman.containsKey(name)){
-            total += totalSalesman.get(name);
+        totalSalesById.put(saleId,total);
+
+        if(totalSalesBySalesman.containsKey(name)){
+            total += totalSalesBySalesman.get(name);
         }
-        totalSalesman.put(name, total);
-        return list;
+        totalSalesBySalesman.put(name, total);
     }
 
     public List<Salesman> getSalesmanList() {
@@ -107,15 +95,11 @@ public class DataController {
         return customerList;
     }
 
-    public List<Sales> getSalesList() {
-        return salesList;
+    public Map<String, Double> getTotalSalesById() {
+        return totalSalesById;
     }
 
-    public Map<String, Double> getTotalSales() {
-        return totalSales;
-    }
-
-    public Map<String, Double> getTotalSalesman() {
-        return totalSalesman;
+    public Map<String, Double> getTotalSalesBySalesman() {
+        return totalSalesBySalesman;
     }
 }
