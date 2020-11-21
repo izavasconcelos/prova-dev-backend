@@ -15,9 +15,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class SalesDAO {
@@ -37,40 +41,39 @@ public class SalesDAO {
         this.dataList = new ArrayList<>();
     }
 
-    public boolean writeDataAnalysisOutputFile() {
+    public void writeDataAnalysisOutputFile() {
         try {
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(FILE_OUT_PATH + FILE_OUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
             outputStreamWriter.write(reportService.reportDataAnalysis());
             outputStreamWriter.close();
-            return true;
+
         } catch (IOException e) {
-            return false;
+            System.out.println("error output");
         }
     }
 
     public List<String> getDataList() {
-
         try {
-            File dir = new File(FILE_IN_PATH);
-            if(dir.isDirectory()){
-                for(File file : dir.listFiles()){
+            List<File> allFiles = Files.find(Paths.get(FILE_IN_PATH), 1000000,
+                    (p, a) -> p.toString().toLowerCase().endsWith(".dat"))
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
+
+                for(File file : allFiles){
                     FileInputStream fileInputStream = new FileInputStream(file);
                     DataInputStream dataInputStream = new DataInputStream(fileInputStream);
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(dataInputStream));
-
                     String strLine;
-
                     while((strLine = bufferedReader.readLine()) != null) {
                         dataList.add(strLine);
                     }
                     dataInputStream.close();
                 }
-            }
+
             return dataList;
 
         } catch (IOException e) {
-            System.out.println("exception");
             return Collections.emptyList();
         }
     }
