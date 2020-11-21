@@ -37,7 +37,7 @@ public class SalesDAO {
         this.dataList = new ArrayList<>();
     }
 
-    public boolean write() {
+    public boolean writeDataAnalysisOutputFile() {
         try {
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(FILE_OUT_PATH + FILE_OUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);

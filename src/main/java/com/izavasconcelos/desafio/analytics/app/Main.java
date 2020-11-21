@@ -27,8 +27,7 @@ public class Main {
         WatchService watcher = FileSystems.getDefault().newWatchService();
 
         pastaOrigem.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-        dataController.extractInfoDataFile();
-        dataController.writeDataFile();
+        dataController.executeDataAnalysis();
 
         while (true) {
             WatchKey wk;
@@ -49,8 +48,7 @@ public class Main {
                 Path arquivoOrigem = pastaOrigem.resolve(nomeArquivo);
                 System.out.printf("Arquivo criado: %s\n", arquivoOrigem);
 
-                dataController.extractInfoDataFile();
-                dataController.writeDataFile();
+                dataController.executeDataAnalysis();
             }
 
             if (!wk.reset()) {
