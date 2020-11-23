@@ -17,6 +17,7 @@ dependencies {
             'org.springframework:spring-core:'+springVersion,
             'org.springframework:spring-context:'+springVersion,
             'org.springframework:spring-beans:'+springVersion,
+            'org.springframework:spring-test:'+springVersion,
             'org.slf4j:slf4j-log4j12:1.7.29'
     ])
     testCompile group: 'junit', name: 'junit', version: '4.12'
