@@ -2,6 +2,8 @@ package com.izavasconcelos.desafio.analytics.dao;
 
 import com.izavasconcelos.desafio.analytics.controller.DataController;
 import com.izavasconcelos.desafio.analytics.service.ReportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedOutputStream;
@@ -25,11 +27,10 @@ import java.util.stream.Collectors;
 
 
 public class SalesDAO {
-    private final static String FILE_OUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/out/";
-    private final static String FILE_OUT_NAME = "analysis.done.dat";
-    private final static String FILE_IN_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
-    private final static String FILE_IN_NAME = "analysis.done.dat";
-
+    private final static String OUTPUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/out/";
+    private final static String FILE_OUTPUT_NAME = "analysis.done.dat";
+    private final static String INPUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
+    public final static Logger logger = LoggerFactory.getLogger(SalesDAO.class);
     private List<String> dataList;
 
     @Autowired
@@ -43,19 +44,23 @@ public class SalesDAO {
 
     public void writeDataAnalysisOutputFile() {
         try {
-            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(FILE_OUT_PATH + FILE_OUT_NAME));
+            File directory = new File(OUTPUT_PATH);
+            if(!directory.isDirectory()) {
+                directory.mkdir();
+            }
+            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(OUTPUT_PATH + FILE_OUTPUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
             outputStreamWriter.write(reportService.reportDataAnalysis());
             outputStreamWriter.close();
 
         } catch (IOException e) {
-            System.out.println("error output");
+            logger.error("Error output", e);
         }
     }
 
-    public List<String> getDataList() {
+    public List<String> getFileList() {
         try {
-            List<File> allFiles = Files.find(Paths.get(FILE_IN_PATH), 1000000,
+            List<File> allFiles = Files.find(Paths.get(INPUT_PATH), 10000,
                     (p, a) -> p.toString().toLowerCase().endsWith(".dat"))
                     .map(Path::toFile)
                     .collect(Collectors.toList());
@@ -74,6 +79,7 @@ public class SalesDAO {
             return dataList;
 
         } catch (IOException e) {
+            logger.error("error input", e);
             return Collections.emptyList();
         }
     }

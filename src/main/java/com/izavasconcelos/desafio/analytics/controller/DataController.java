@@ -38,7 +38,7 @@ public class DataController {
     }
 
     public void executeDataAnalysis() {
-        List<String> dataList = salesDAO.getDataList();
+        List<String> dataList = salesDAO.getFileList();
         dataList.forEach(this::getLayout);
         dataList.clear();
 
