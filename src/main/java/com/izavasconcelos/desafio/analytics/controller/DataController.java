@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DataController {
@@ -40,10 +43,7 @@ public class DataController {
         dataList.clear();
 
         salesDAO.writeDataAnalysisOutputFile();
-        customerList.clear();
-        salesmanList.clear();
-        totalSalesById.clear();
-        totalSalesBySalesman.clear();
+        clearAll();
     }
 
     public void getLayout(String data) {
@@ -112,5 +112,12 @@ public class DataController {
 
     public Map<String, Double> getTotalSalesBySalesman() {
         return totalSalesBySalesman;
+    }
+
+    public void clearAll() {
+        customerList.clear();
+        salesmanList.clear();
+        totalSalesById.clear();
+        totalSalesBySalesman.clear();
     }
 }
