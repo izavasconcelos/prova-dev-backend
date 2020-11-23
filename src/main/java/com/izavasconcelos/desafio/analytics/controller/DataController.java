@@ -56,7 +56,7 @@ public class DataController {
                 if(salesmanList.stream().noneMatch(cpf -> cpf.getCpf().equals(dataSplit[1]))) {
                     salesmanList.add(salesman);
                 } else {
-                    logger.info("Vendedor já existe!");
+                    logger.info("duplicate salesman!");
                 }
                 break;
             case ID_CUSTOMER: {
@@ -64,7 +64,7 @@ public class DataController {
                 if(customerList.stream().noneMatch(cnpj -> cnpj.getCnpj().equals(dataSplit[1]))) {
                     customerList.add(customer);
                 } else {
-                    logger.debug("Cliente já existe!");
+                    logger.info("duplicate customer!");
                 }
                 break;
             }
@@ -89,7 +89,7 @@ public class DataController {
         if(!totalSalesById.containsKey(saleId)){
             totalSalesById.put(saleId,total);
         } else {
-            logger.debug("Id da Venda duplicado!");
+            logger.info("duplicate id!");
         }
 
         if(totalSalesBySalesman.containsKey(name)){
