@@ -2,7 +2,6 @@ package com.izavasconcelos.desafio.analytics.service;
 
 import com.izavasconcelos.desafio.analytics.annotation.AppConfig;
 import com.izavasconcelos.desafio.analytics.controller.DataController;
-import com.izavasconcelos.desafio.analytics.dao.SalesDAO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +68,7 @@ public class ReportServiceTest {
 
     @Test
     public void createEmptyReportTest() {
-        dataController.executeDataAnalysis();
+        dataController.clearAll();
         String report = reportService.reportDataAnalysis();
         Assert.assertEquals("Amount Clients:0, Amount Salesman:0, Id Most Expensive Sale:none, Worst Salesman:none", report);
     }
