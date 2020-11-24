@@ -4,7 +4,9 @@
 
 ``` 
 A aplicação deve ler arquivos .dat, analisar os dados e gerar um relatório.
-Existem 3 tipos de dados dentro desses arquivos. Para cada tipo de dado, existe um layout diferente.
+Existem 3 tipos de dados dentro desses arquivos. 
+
+Para cada tipo de dado, existe um layout diferente:
 
 Os dados do vendedor têm o formato id 001 e a linha terá o seguinte formato:
 • 001çCPFçNomeçSalário
@@ -16,7 +18,7 @@ Os dados de vendas têm o formato id 003.
 Dentro da linha de vendas, há a lista de itens, que é envolto por colchetes []. 
 • 003çIDdaVendaç[ID do item-Quantidade do item-Preço do item]çNomedoVendedor
 
-A aplicação roda em tempo real e atualizada quando arquivos são criados, modificados ou deletados.
+A aplicação roda em tempo real e atualiza quando arquivos são criados, modificados ou deletados.
 O relatório do arquivo de saída possui os seguintes dados:
 • Quantidade de clientes no arquivo de entrada
 • Quantidade de vendedor no arquivo de entrada
@@ -49,7 +51,7 @@ arquivo1.dat:
 
 - /data/out
 
-Após a execução irá gerar o relatório no arquivo de saída denominado **report.done.dat**
+Após a execução gera o relatório no arquivo de saída denominado **report.done.dat** na pasta /out
 
 
 ---
