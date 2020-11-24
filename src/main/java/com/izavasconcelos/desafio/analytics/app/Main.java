@@ -19,7 +19,7 @@ import java.nio.file.WatchService;
 import static java.nio.file.StandardWatchEventKinds.*;
 
 public class Main {
-    private static final String LOCAL_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
+    private static final String LOCAL_PATH = "data/in/";
 
     public static void main(String[] args) throws IOException {
         watcherFileSystems();
