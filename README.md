@@ -16,7 +16,7 @@ Os dados de vendas têm o formato id 003.
 Dentro da linha de vendas, há a lista de itens, que é envolto por colchetes []. 
 • 003çIDdaVendaç[ID do item-Quantidade do item-Preço do item]çNomedoVendedor
 
-A aplicação roda em tempo real e é atualizado quando arquivos são criados, modificados ou deletados.
+A aplicação roda em tempo real e atualizada quando arquivos são criados, modificados ou deletados.
 O relatório do arquivo de saída possui os seguintes dados:
 • Quantidade de clientes no arquivo de entrada
 • Quantidade de vendedor no arquivo de entrada
@@ -25,13 +25,15 @@ O relatório do arquivo de saída possui os seguintes dados:
 
 ``` 
 
+---
+
 **Para rodar a aplicação insira o comando abaixo na pasta do projeto:**
 ``` 
 $ ./app.sh run
 ```
 Pronto, aplicação rodando!
 
-Após rodar o script serão criadas duas pastas e o diretório /data/:
+Após rodar o script serão criadas duas pastas /in e /out no diretório /data/:
 - /data/in
 
 Recebe os arquivos com os dados de entrada, a aplicação lê **apenas arquivos .dat**
@@ -47,7 +49,7 @@ arquivo1.dat:
 
 - /data/out
 
-Após a execução irá gerar o relatório no arquivo de saída denominado *report.done.dat*
+Após a execução irá gerar o relatório no arquivo de saída denominado **report.done.dat**
 
 
 ---
