@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
 
 
 public class SalesDAO {
-    private final static String OUTPUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/out/";
-    private final static String FILE_OUTPUT_NAME = "analysis.done.dat";
-    private final static String INPUT_PATH = "src/main/java/com/izavasconcelos/desafio/analytics/data/in/";
+    private final static String OUTPUT_PATH = "data/out/";
+    private final static String FILE_OUTPUT_NAME = "report.done.dat";
+    private final static String INPUT_PATH = "data/in/";
     public final static Logger logger = LoggerFactory.getLogger(SalesDAO.class);
     private List<String> dataList;
 
@@ -46,7 +46,7 @@ public class SalesDAO {
         try {
             File directory = new File(OUTPUT_PATH);
             if(!directory.isDirectory()) {
-                directory.mkdir();
+                directory.mkdirs();
             }
             OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(OUTPUT_PATH + FILE_OUTPUT_NAME));
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
@@ -60,6 +60,10 @@ public class SalesDAO {
 
     public List<String> getFileList() {
         try {
+            File directory = new File(INPUT_PATH);
+            if(!directory.isDirectory()) {
+                directory.mkdirs();
+            }
             List<File> allFiles = Files.find(Paths.get(INPUT_PATH), 10000,
                     (p, a) -> p.toString().toLowerCase().endsWith(".dat"))
                     .map(Path::toFile)
