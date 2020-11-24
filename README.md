@@ -1,6 +1,6 @@
 ## Desafio técnico Back-End ilegra
 
-*Análise de dados*
+**Análise de dados**
 
 ``` 
 A aplicação deve ler arquivos .dat, analisar os dados e gerar um relatório.
@@ -16,7 +16,7 @@ Os dados de vendas têm o formato id 003.
 Dentro da linha de vendas, há a lista de itens, que é envolto por colchetes []. 
 • 003çIDdaVendaç[ID do item-Quantidade do item-Preço do item]çNomedoVendedor
 
-A aplicação fica em execução o tempo todo e sempre que arquivos são criados, modificados ou deletados ele é atualizado.
+A aplicação roda em tempo real e é atualizado quando arquivos são criados, modificados ou deletados.
 O relatório do arquivo de saída possui os seguintes dados:
 • Quantidade de clientes no arquivo de entrada
 • Quantidade de vendedor no arquivo de entrada
@@ -25,7 +25,7 @@ O relatório do arquivo de saída possui os seguintes dados:
 
 ``` 
 
-*Para rodar a aplicação insira o comando abaixo na pasta do projeto:*
+**Para rodar a aplicação insira o comando abaixo na pasta do projeto:**
 ``` 
 $ ./app.sh run
 ```
@@ -34,9 +34,9 @@ Pronto, aplicação rodando!
 Após rodar o script serão criadas duas pastas e o diretório /data/:
 - /data/in
 
-Recebe os arquivos com os dados de entrada, a aplicação lê *apenas arquivos .dat*
+Recebe os arquivos com os dados de entrada, a aplicação lê **apenas arquivos .dat**
 
-É possível ler arquivos com vários dados, exemplo:
+É possível ler arquivos com várias linhas de dados, exemplo:
 
 arquivo1.dat:
 ``` 
@@ -50,8 +50,8 @@ arquivo1.dat:
 Após a execução irá gerar o relatório no arquivo de saída denominado *report.done.dat*
 
 
-
-*Referências de estudo e desenvolvimento:*
+---
+**Referências de estudo e desenvolvimento:**
 - https://www.caelum.com.br/apostila-java-orientacao-objetos/pacote-java-io
 - http://tutorials.jenkov.com/java-io/index.html
 - https://stackoverflow.com/questions/12175401/how-to-create-a-dat-file-in-java
