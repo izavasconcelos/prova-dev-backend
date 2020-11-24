@@ -50,7 +50,6 @@ public class Main {
                 Path file = ev.context();
                 Path localFile = localPath.resolve(file);
                 logger.info("File create, modify or delete: " + localFile);
-
                 dataController.executeDataAnalysis();
             }
 

@@ -1,6 +1,5 @@
 package com.izavasconcelos.desafio.analytics.dao;
 
-import com.izavasconcelos.desafio.analytics.controller.DataController;
 import com.izavasconcelos.desafio.analytics.service.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +32,6 @@ public class SalesDAO {
     public final static Logger logger = LoggerFactory.getLogger(SalesDAO.class);
     private List<String> dataList;
 
-    @Autowired
-    private DataController dataController;
     @Autowired
     private ReportService reportService;
 

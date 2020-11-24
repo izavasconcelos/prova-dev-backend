@@ -14,22 +14,6 @@ public class Report {
         this.worstSalesman = worstSalesman;
     }
 
-    public void setAmountClients(String amountClients) {
-        this.amountClients = amountClients;
-    }
-
-    public void setAmountSalesman(String amountSalesman) {
-        this.amountSalesman = amountSalesman;
-    }
-
-    public void setExpensiveSale(String expensiveSale) {
-        this.expensiveSale = expensiveSale;
-    }
-
-    public void setWorstSalesman(String worstSalesman) {
-        this.worstSalesman = worstSalesman;
-    }
-
     @Override
     public String toString() {
         return "Amount Clients:" + amountClients

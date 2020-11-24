@@ -16,9 +16,9 @@ import java.util.Map;
 @Controller
 public class DataController {
 
-    public final static String ID_SALESMAN = "001";
-    public final static String ID_CUSTOMER = "002";
-    public final static String ID_SALES_DATA = "003";
+    private final static String ID_SALESMAN = "001";
+    private final static String ID_CUSTOMER = "002";
+    private final static String ID_SALES = "003";
     public final static Logger logger = LoggerFactory.getLogger(DataController.class);
 
     private List<Salesman> salesmanList;
@@ -47,7 +47,6 @@ public class DataController {
     }
 
     public void getLayout(String data) {
-
         String [] dataSplit = data.split("ç");
 
         switch (dataSplit[0]) {
@@ -68,7 +67,7 @@ public class DataController {
                 }
                 break;
             }
-            case ID_SALES_DATA: {
+            case ID_SALES: {
                 salesItemsSeparated(dataSplit[1], dataSplit[2], dataSplit[3]);
                 break;
             }

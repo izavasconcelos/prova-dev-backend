@@ -1,6 +1,5 @@
 package com.izavasconcelos.desafio.analytics.service;
 
-
 import com.izavasconcelos.desafio.analytics.controller.DataController;
 import com.izavasconcelos.desafio.analytics.model.Report;
 import org.springframework.beans.factory.annotation.Autowired;
